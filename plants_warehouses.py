@@ -4,6 +4,9 @@
 Example of linear programming using PuLP.
 
 Elmhurst University SCM 510 assignment.
+
+./plants_warehouses.py
+./plants_warehouses.py > plants_warehouses.txt
 '''
 
 
@@ -51,8 +54,8 @@ costs = [
 costs = utilities.makeDict(
     headers=[plants, warehouses], array=costs, default=0
 )
-# Create the linear programming problem object
-problem = LpProblem(name='plant_warehouse_problem', sense=LpMinimize)
+# Create the linear programming model object
+model = LpProblem(name='plant_warehouse_model', sense=LpMinimize)
 # Create list of tuples containing all lanes
 routes = [(plant, warehouse) for plant in plants for warehouse in warehouses]
 # Create dictionary containing all lanes
@@ -64,30 +67,35 @@ vars = LpVariable.dicts(
     cat=LpInteger
 )
 # Add the objective function
-problem += lpSum([vars[plant][warehouse]*costs[plant][warehouse]
-                 for (plant, warehouse) in routes])
-# Add supply maximum constraints to problem for each supply note (plant)
+model += lpSum([vars[plant][warehouse]*costs[plant][warehouse]
+               for (plant, warehouse) in routes])
+# Add supply maximum constraints to model for each supply note (plant)
 for plant in plants:
-    problem += lpSum([vars[plant][warehouse] for warehouse in warehouses])\
-            <= supply[plant], 'sum_of_products_out_of_plnats_%s' % plant
+    model += lpSum([vars[plant][warehouse] for warehouse in warehouses])\
+          <= supply[plant], 'sum_of_products_out_of_plnats_%s' % plant
 for warehouse in warehouses:
-    problem += lpSum([vars[plant][warehouse] for plant in plants])\
-            >= demand[warehouse], 'sum_of_products_into_warehouses%s'\
-            % warehouse
-problem.writeLP(filename='plants_warehouses.lp')
-# Solve the problem using PuLP's choice of solver
-problem.solve(solver=None)
+    model += lpSum([vars[plant][warehouse] for plant in plants])\
+          >= demand[warehouse], 'sum_of_products_into_warehouses%s'\
+          % warehouse
+model.writeLP(filename='plants_warehouses.lp')
+# Solve the model using PuLP's choice of solver
+model.solve(solver=None)
 f = open('plants_warehouses.lp')
 print(f.read())
 f.close()
 print()
+# Capture the stdout for solve
+# f = open('plants_warehouses.txt')
+# print(f.read())
+# f.close()
+# print()
 # Print status of solution
-print('Status', LpStatus[problem.status])
+print('Status', LpStatus[model.status])
 # Print each variable with it' resolved optimum value
-for v in problem.variables():
+for v in model.variables():
     print(v.name, '=', v.varValue)
 # Print the optimized objective function
-print('Total cost of transportation =', utilities.value(problem.objective))
+print('Total cost of transportation =', utilities.value(model.objective))
 ds.html_footer()
 sys.stdout.close()
 sys.stdout = original_stdout

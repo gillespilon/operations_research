@@ -2,6 +2,9 @@
 
 '''
 Example of linear programming using PuLP.
+
+Reference:
+https://itnext.io/introduction-to-linear-programming-with-python-1068778600ae
 '''
 
 

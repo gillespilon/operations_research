@@ -2,14 +2,31 @@
 
 '''
 Example of linear programming using PuLP.
+
+Elmhurst University SCM 510 assignment.
 '''
 
+
+import webbrowser
+import textwrap
+import sys
 
 from pulp import (
     LpProblem, LpMinimize, LpVariable, LpInteger, utilities, lpSum, LpStatus
 )
+import datasense as ds
 
 
+header_title = 'Linear Programming---Plants and Warehouses'
+header_id = 'linear-programming-plants-and-warehouses'
+output_url = 'plants_warehouses.html'
+wrapper = textwrap.TextWrapper(width=70)
+original_stdout = sys.stdout
+sys.stdout = open(output_url, 'w')
+ds.html_header(
+    headertitle=header_title,
+    headerid=header_id
+)
 # Create list of plants
 plants = ['Rockford', 'Grand Rapids']
 # Create dictionary of units sent from plants
@@ -60,6 +77,10 @@ for warehouse in warehouses:
 problem.writeLP(filename='plants_warehouses.lp')
 # Solve the problem using PuLP's choice of solver
 problem.solve(solver=None)
+f = open('plants_warehouses.lp')
+print(f.read())
+f.close()
+print()
 # Print status of solution
 print('Status', LpStatus[problem.status])
 # Print each variable with it' resolved optimum value
@@ -67,3 +88,7 @@ for v in problem.variables():
     print(v.name, '=', v.varValue)
 # Print the optimized objective function
 print('Total cost of transportation =', utilities.value(problem.objective))
+ds.html_footer()
+sys.stdout.close()
+sys.stdout = original_stdout
+webbrowser.open_new_tab(output_url)

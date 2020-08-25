@@ -11,7 +11,7 @@ https://itnext.io/introduction-to-linear-programming-with-python-1068778600ae
 '''
 
 
-from pulp import LpProblem, LpMaximize, LpVariable, LpInteger
+from pulp import LpProblem, LpMaximize, LpVariable, LpInteger, LpStatus
 
 
 # Create the linear programming model object
@@ -40,3 +40,5 @@ model.writeLP(
 )
 # Solve the model using PuLP's choice of solver
 model.solve(solver=None)
+# Print status of solution
+print('Status', LpStatus[model.status])

@@ -5,6 +5,9 @@ Example of linear programming using PuLP.
 
 Reference:
 https://itnext.io/introduction-to-linear-programming-with-python-1068778600ae
+
+./medicines_herbs.py
+./medicines_herbs.py > medicines_herbs.txt
 '''
 
 

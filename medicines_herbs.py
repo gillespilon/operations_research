@@ -11,7 +11,9 @@ https://itnext.io/introduction-to-linear-programming-with-python-1068778600ae
 '''
 
 
-from pulp import LpProblem, LpMaximize, LpVariable, LpInteger, LpStatus
+from pulp import (
+    LpProblem, LpMaximize, LpVariable, LpInteger, LpStatus, utilities
+)
 
 
 # Create the linear programming model object
@@ -45,3 +47,5 @@ print('Status', LpStatus[model.status])
 # Print each variable with it' resolved optimum value
 for v in model.variables():
     print(v.name, '=', v.varValue)
+# Print the optimized objective function
+print('Objective value =', utilities.value(model.objective))

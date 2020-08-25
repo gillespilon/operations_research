@@ -11,11 +11,26 @@ https://itnext.io/introduction-to-linear-programming-with-python-1068778600ae
 '''
 
 
+import webbrowser
+import textwrap
+import sys
+
 from pulp import (
     LpProblem, LpMaximize, LpVariable, LpInteger, LpStatus, utilities
 )
+import datasense as ds
 
 
+header_title = 'Linear Programming---Medicines and Herbs'
+header_id = 'linear-programming-medicines-and-herbs'
+output_url = 'medicines_herbs.html'
+wrapper = textwrap.TextWrapper(width=70)
+original_stdout = sys.stdout
+sys.stdout = open(output_url, 'w')
+ds.html_header(
+    headertitle=header_title,
+    headerid=header_id
+)
 # Create the linear programming model object
 model = LpProblem(name='medicines_and_herbs', sense=LpMaximize)
 # Create the linear programming variable objects
@@ -42,6 +57,15 @@ model.writeLP(
 )
 # Solve the model using PuLP's choice of solver
 model.solve(solver=None)
+f = open('medicines_herbs.lp')
+print(f.read())
+f.close()
+print()
+# Capture the stdout for solve
+# f = open('plants_warehouses.txt')
+# print(f.read())
+# f.close()
+# print()
 # Print status of solution
 print('Status', LpStatus[model.status])
 # Print each variable with it' resolved optimum value
@@ -49,3 +73,7 @@ for v in model.variables():
     print(v.name, '=', v.varValue)
 # Print the optimized objective function
 print('Objective value =', utilities.value(model.objective))
+ds.html_footer()
+sys.stdout.close()
+sys.stdout = original_stdout
+webbrowser.open_new_tab(output_url)

@@ -14,8 +14,8 @@ https://itnext.io/introduction-to-linear-programming-with-python-1068778600ae
 from pulp import LpProblem, LpMaximize, LpVariable, LpInteger
 
 
-# Create the linear programming problem object
-problem = LpProblem(name='medicines_and_herbs', sense=LpMaximize)
+# Create the linear programming model object
+model = LpProblem(name='medicines_and_herbs', sense=LpMaximize)
 # Create the linear programming variable objects
 x = LpVariable(
     name='medicine_1_units',
@@ -30,13 +30,13 @@ y = LpVariable(
     LpInteger
 )
 # Add the objective function
-problem += 25*x + 20*y, 'health restored, to be maximized'
+model += 25*x + 20*y, 'health restored, to be maximized'
 # Add the constraints
-problem += 3*x + 4*y <= 25, 'herb A constraint'
-problem += 2*x + y <= 10, 'herb B constraint'
-# Write the problem data to a .lp file
-problem.writeLP(
+model += 3*x + 4*y <= 25, 'herb A constraint'
+model += 2*x + y <= 10, 'herb B constraint'
+# Write the model data to a .lp file
+model.writeLP(
     'medicines_herbs.lp'
 )
-# Solve the problem using PuLP's choice of solver
-problem.solve()
+# Solve the model using PuLP's choice of solver
+model.solve()

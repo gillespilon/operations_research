@@ -36,7 +36,7 @@ model += 3*x + 4*y <= 25, 'herb A constraint'
 model += 2*x + y <= 10, 'herb B constraint'
 # Write the model data to a .lp file
 model.writeLP(
-    'medicines_herbs.lp'
+    filename='medicines_herbs.lp'
 )
 # Solve the model using PuLP's choice of solver
-model.solve()
+model.solve(solver=None)

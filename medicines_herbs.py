@@ -42,3 +42,6 @@ model.writeLP(
 model.solve(solver=None)
 # Print status of solution
 print('Status', LpStatus[model.status])
+# Print each variable with it' resolved optimum value
+for v in model.variables():
+    print(v.name, '=', v.varValue)

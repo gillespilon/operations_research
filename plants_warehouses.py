@@ -72,7 +72,7 @@ model += lpSum([vars[plant][warehouse]*transportation_costs[plant][warehouse]
 # Add plant capacity maximum constraints to model for each plant
 for plant in plants:
     model += lpSum([vars[plant][warehouse] for warehouse in warehouses])\
-          <= plant_capacity[plant], 'sum_of_products_out_of_plnats_%s' % plant
+          <= plant_capacity[plant], 'sum_of_products_out_of_plants_%s' % plant
 for warehouse in warehouses:
     model += lpSum([vars[plant][warehouse] for plant in plants])\
           >= warehouse_demand[warehouse], 'sum_of_products_into_warehouses%s'\

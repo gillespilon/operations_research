@@ -33,26 +33,26 @@ ds.html_header(
 # Create list of plants
 plants = ['Rockford', 'Grand Rapids']
 # Create dictionary of units sent from plants
-supply = {
+plant_capacity = {
     'Rockford': 500,
     'Grand Rapids': 600
 }
 # Create list of warehouses
 warehouses = ['Chicago', 'Detroit', 'Indianapolis']
 # Create dictionary of warehouse demand
-demand = {
+warehouse_demand = {
     'Chicago': 400,
     'Detroit': 300,
     'Indianapolis': 350
 }
 # Create list of costs, rows = plants, columns = warehouses
-costs = [
+transportation_costs = [
     [10, 16, 12],
     [14, 8, 11]
 ]
 # Make costs into dictionary
-costs = utilities.makeDict(
-    headers=[plants, warehouses], array=costs, default=0
+transportation_costs = utilities.makeDict(
+    headers=[plants, warehouses], array=transportation_costs, default=0
 )
 # Create the linear programming model object
 model = LpProblem(name='plant_warehouse_model', sense=LpMinimize)
@@ -67,15 +67,15 @@ vars = LpVariable.dicts(
     cat=LpInteger
 )
 # Add the objective function
-model += lpSum([vars[plant][warehouse]*costs[plant][warehouse]
+model += lpSum([vars[plant][warehouse]*transportation_costs[plant][warehouse]
                for (plant, warehouse) in routes])
-# Add supply maximum constraints to model for each supply note (plant)
+# Add plant capacity maximum constraints to model for each plant
 for plant in plants:
     model += lpSum([vars[plant][warehouse] for warehouse in warehouses])\
-          <= supply[plant], 'sum_of_products_out_of_plnats_%s' % plant
+          <= plant_capacity[plant], 'sum_of_products_out_of_plnats_%s' % plant
 for warehouse in warehouses:
     model += lpSum([vars[plant][warehouse] for plant in plants])\
-          >= demand[warehouse], 'sum_of_products_into_warehouses%s'\
+          >= warehouse_demand[warehouse], 'sum_of_products_into_warehouses%s'\
           % warehouse
 model.writeLP(filename='plants_warehouses.lp')
 # Solve the model using PuLP's choice of solver

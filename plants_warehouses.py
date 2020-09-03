@@ -30,45 +30,58 @@ ds.html_header(
     headertitle=header_title,
     headerid=header_id
 )
+# Define decision variables: plants, warehouses
 # Create list of plants
 plants = ['Rockford', 'Grand Rapids']
+print(f'Plants:\n{plants}\n')
+# Create list of capacities
+capacities = [500, 600]
+print(f'Capacities:\n{capacities}\n')
 # Create dictionary of units sent from plants
-plant_capacity = {
-    'Rockford': 500,
-    'Grand Rapids': 600
-}
+plant_capacity = dict(zip(plants, capacities))
+print(f'Plant capacity:\n{plant_capacity}\n')
 # Create list of warehouses
 warehouses = ['Chicago', 'Detroit', 'Indianapolis']
+print(f'Warehouses:\n{warehouses}\n')
+# Create list of demand
+demand = [400, 300, 350]
+print(f'Demand:\n{demand}\n')
 # Create dictionary of warehouse demand
-warehouse_demand = {
-    'Chicago': 400,
-    'Detroit': 300,
-    'Indianapolis': 350
-}
-# Create list of costs, rows = plants, columns = warehouses
-transportation_costs = [
+warehouse_demand = dict(zip(warehouses, demand))
+print(f'Warehouse demand:\n{warehouse_demand}\n')
+# Create list of lists of transportation costs
+# rows = plants, columns = warehouse, entries = costs plant -> warehouse
+lane_costs = [
     [10, 16, 12],
     [14, 8, 11]
 ]
-# Make costs into dictionary
-transportation_costs = utilities.makeDict(
-    headers=[plants, warehouses], array=transportation_costs, default=0
-)
+print(f'Lane costs:\n{lane_costs}\n')
+# Create dictionary of transportation costs by plnats, warehouses
+warehouse_lane_costs = [dict(zip(warehouses, values)) for values in lane_costs]
+print(f'Warehouse lane costs:\n{warehouse_lane_costs}\n')
+plant_warehouse_lane_costs = dict(zip(plants, warehouse_lane_costs))
+print(f'Plant warehouse lane costs:\n{plant_warehouse_lane_costs}\n')
+# transportation_costs = utilities.makeDict(
+#     headers=[plants, warehouses], array=transportation_costs, default=0
+# )
 # Create the linear programming model object
 model = LpProblem(name='plant_warehouse_model', sense=LpMinimize)
 # Create list of tuples containing all lanes
-routes = [(plant, warehouse) for plant in plants for warehouse in warehouses]
+lanes = [(plant, warehouse) for plant in plants for warehouse in warehouses]
+print(f'Lanes:\n{lanes}\n')
 # Create dictionary containing all lanes
 vars = LpVariable.dicts(
-    name='route',
+    name='Lane',
     indexs=(plants, warehouses),
     lowBound=0,
     upBound=None,
     cat=LpInteger
 )
 # Add the objective function
-model += lpSum([vars[plant][warehouse]*transportation_costs[plant][warehouse]
-               for (plant, warehouse) in routes])
+model += lpSum(
+    [vars[plant][warehouse]*plant_warehouse_lane_costs[plant][warehouse]
+     for (plant, warehouse) in lanes]
+)
 # Add plant capacity maximum constraints to model for each plant
 for plant in plants:
     model += lpSum([vars[plant][warehouse] for warehouse in warehouses])\
@@ -81,21 +94,21 @@ model.writeLP(filename='plants_warehouses.lp')
 # Solve the model using PuLP's choice of solver
 model.solve(solver=None)
 f = open('plants_warehouses.lp')
-print(f.read())
+print(f'\n{f.read()}\n')
 f.close()
-print()
 # Capture the stdout for solve
 # f = open('plants_warehouses.txt')
 # print(f.read())
 # f.close()
 # print()
 # Print status of solution
-print('Status', LpStatus[model.status])
-# Print each variable with it' resolved optimum value
+print(f'Status = {LpStatus[model.status]}\n')
+# Print resolved optimum value for each lane
+print('Lane shipments')
 for v in model.variables():
     print(v.name, '=', v.varValue)
 # Print the optimized objective function
-print('Total cost of transportation =', utilities.value(model.objective))
+print(f'\nTotal cost of transportation = {utilities.value(model.objective)}')
 ds.html_footer()
 sys.stdout.close()
 sys.stdout = original_stdout

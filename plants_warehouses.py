@@ -10,8 +10,10 @@ Elmhurst University SCM 510 assignment.
 '''
 
 
+from typing import Union, Dict, List, Tuple
 import webbrowser
 import textwrap
+import pprint
 import sys
 
 from pulp import (
@@ -30,45 +32,57 @@ ds.html_header(
     headertitle=header_title,
     headerid=header_id
 )
+
+
+def pretty_print(object: Union[str, Dict, List, Tuple], label: str) -> None:
+    pp = pprint.PrettyPrinter(depth=2, compact=True, sort_dicts=False)
+    print(label + ':')
+    pp.pprint(object)
+    print()
+
+
 # Define decision variables: plants, warehouses
 # Create list of plants
 plants = ['Rockford', 'Grand Rapids']
-print(f'Plants:\n{plants}\n')
+pretty_print(plants, 'Plants')
+# pp.pprint(plants)
+# print()
 # Create list of capacities
 capacities = [500, 600]
-print(f'Capacities:\n{capacities}\n')
+pretty_print(capacities, 'Capacities')
 # Create dictionary of units sent from plants
 plant_capacity = dict(zip(plants, capacities))
-print(f'Plant capacity:\n{plant_capacity}\n')
+pretty_print(plant_capacity, 'Plant capacity')
 # Create list of warehouses
 warehouses = ['Chicago', 'Detroit', 'Indianapolis']
-print(f'Warehouses:\n{warehouses}\n')
+pretty_print(warehouses, 'Warehouses')
 # Create list of demand
 demand = [400, 300, 350]
-print(f'Demand:\n{demand}\n')
+pretty_print(demand, 'Demand')
 # Create dictionary of warehouse demand
 warehouse_demand = dict(zip(warehouses, demand))
-print(f'Warehouse demand:\n{warehouse_demand}\n')
+pretty_print(warehouse_demand, 'Warehouse demand')
 # Create list of lists of transportation costs
 # rows = plants, columns = warehouse, entries = costs plant -> warehouse
 lane_costs = [
     [10, 16, 12],
     [14, 8, 11]
 ]
-print(f'Lane costs:\n{lane_costs}\n')
+pretty_print(lane_costs, 'Lane costs')
 # Create dictionary of transportation costs by plnats, warehouses
 warehouse_lane_costs = [dict(zip(warehouses, values)) for values in lane_costs]
-print(f'Warehouse lane costs:\n{warehouse_lane_costs}\n')
+pretty_print(warehouse_lane_costs, 'Warehouse lane costs')
 plant_warehouse_lane_costs = dict(zip(plants, warehouse_lane_costs))
-print(f'Plant warehouse lane costs:\n{plant_warehouse_lane_costs}\n')
+# print(f'Plant warehouse lane costs:\n{plant_warehouse_lane_costs}\n')
 # transportation_costs = utilities.makeDict(
 #     headers=[plants, warehouses], array=transportation_costs, default=0
 # )
 # Create the linear programming model object
+pretty_print(plant_warehouse_lane_costs, 'Plant warehouse lane costs')
 model = LpProblem(name='plant_warehouse_model', sense=LpMinimize)
 # Create list of tuples containing all lanes
 lanes = [(plant, warehouse) for plant in plants for warehouse in warehouses]
-print(f'Lanes:\n{lanes}\n')
+pretty_print(lanes, 'Lanes')
 # Create dictionary containing all lanes
 vars = LpVariable.dicts(
     name='Lane',

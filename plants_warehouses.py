@@ -5,6 +5,7 @@ Example of linear programming using PuLP.
 
 Elmhurst University SCM 510 assignment.
 
+time -f '%e' ./plants_warehouses.py
 ./plants_warehouses.py
 ./plants_warehouses.py > plants_warehouses.txt
 '''
@@ -36,27 +37,18 @@ ds.html_header(
 
 def main():
     # Define decision variables: plants, warehouses
-    # Create list of plants
     plants = ['Rockford', 'Grand Rapids']
     pretty_print(plants, 'Plants')
-    # pp.pprint(plants)
-    # print()
-    # Create list of capacities
     capacities = [500, 600]
     pretty_print(capacities, 'Capacities')
-    # Create dictionary of units sent from plants
     plant_capacity = dict(zip(plants, capacities))
     pretty_print(plant_capacity, 'Plant capacity')
-    # Create list of warehouses
     warehouses = ['Chicago', 'Detroit', 'Indianapolis']
     pretty_print(warehouses, 'Warehouses')
-    # Create list of demand
     demand = [400, 300, 350]
     pretty_print(demand, 'Demand')
-    # Create dictionary of warehouse demand
     warehouse_demand = dict(zip(warehouses, demand))
     pretty_print(warehouse_demand, 'Warehouse demand')
-    # Create list of lists of transportation costs
     # rows = plants, columns = warehouse, entries = costs plant -> warehouse
     lane_costs = [
         [10, 16, 12],
@@ -68,18 +60,12 @@ def main():
         [dict(zip(warehouses, values)) for values in lane_costs]
     pretty_print(warehouse_lane_costs, 'Warehouse lane costs')
     plant_warehouse_lane_costs = dict(zip(plants, warehouse_lane_costs))
-    # print(f'Plant warehouse lane costs:\n{plant_warehouse_lane_costs}\n')
-    # transportation_costs = utilities.makeDict(
-    #     headers=[plants, warehouses], array=transportation_costs, default=0
-    # )
     # Create the linear programming model object
     pretty_print(plant_warehouse_lane_costs, 'Plant warehouse lane costs')
     model = LpProblem(name='plant_warehouse_model', sense=LpMinimize)
-    # Create list of tuples containing all lanes
     lanes =\
         [(plant, warehouse) for plant in plants for warehouse in warehouses]
     pretty_print(lanes, 'Lanes')
-    # Create dictionary containing all lanes
     vars = LpVariable.dicts(
         name='Lane',
         indexs=(plants, warehouses),
@@ -108,18 +94,11 @@ def main():
     f = open('plants_warehouses.lp')
     print(f'\n{f.read()}\n')
     f.close()
-    # Capture the stdout for solve
-    # f = open('plants_warehouses.txt')
-    # print(f.read())
-    # f.close()
-    # print()
-    # Print status of solution
     print(f'Status = {LpStatus[model.status]}\n')
     # Print resolved optimum value for each lane
     print('Lane shipments')
     for v in model.variables():
         print(v.name, '=', v.varValue)
-    # Print the optimized objective function
     print(
         f'\nTotal cost of transportation = {utilities.value(model.objective)}'
     )
@@ -129,7 +108,17 @@ def main():
     webbrowser.open_new_tab(output_url)
 
 
-def pretty_print(object: Union[str, Dict, List, Tuple], label: str) -> None:
+def pretty_print(
+    object: Union[str, Dict, List, Tuple],
+    label: str
+) -> None:
+    '''
+    Print data structures for clarity.
+
+    Parameters:
+        object  : Union[str, Dict, List, Tuple]
+        label   : str
+    '''
     pp = pprint.PrettyPrinter(depth=2, compact=True, sort_dicts=False)
     print(label + ':')
     pp.pprint(object)

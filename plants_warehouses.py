@@ -1,5 +1,4 @@
 #! /usr/bin/env python3
-
 '''
 Example of linear programming using PuLP.
 
@@ -10,9 +9,7 @@ time -f '%e' ./plants_warehouses.py
 ./plants_warehouses.py > plants_warehouses.txt
 '''
 
-
 from typing import Union, Dict, List, Tuple
-import textwrap
 import pprint
 
 from pulp import (
@@ -20,14 +17,12 @@ from pulp import (
 )
 import datasense as ds
 
-
 header_title = 'Linear Programming---Plants and Warehouses'
 header_id = 'linear-programming-plants-and-warehouses'
 output_url = 'plants_warehouses.html'
 
 
 def main():
-    wrapper = textwrap.TextWrapper(width=70)
     original_stdout = ds.html_begin(
         outputurl=output_url,
         headertitle=header_title,

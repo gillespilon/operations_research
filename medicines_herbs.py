@@ -1,5 +1,4 @@
 #! /usr/bin/env python3
-
 '''
 Example of linear programming using PuLP.
 
@@ -10,14 +9,12 @@ https://itnext.io/introduction-to-linear-programming-with-python-1068778600ae
 ./medicines_herbs.py > medicines_herbs.txt
 '''
 
-
 import textwrap
 
 from pulp import (
     LpProblem, LpMaximize, LpVariable, LpInteger, LpStatus, utilities
 )
 import datasense as ds
-
 
 header_title = 'Linear Programming---Medicines and Herbs'
 header_id = 'linear-programming-medicines-and-herbs'

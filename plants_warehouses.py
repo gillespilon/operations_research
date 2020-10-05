@@ -12,10 +12,8 @@ time -f '%e' ./plants_warehouses.py
 
 
 from typing import Union, Dict, List, Tuple
-import webbrowser
 import textwrap
 import pprint
-import sys
 
 from pulp import (
     LpProblem, LpMinimize, LpVariable, LpInteger, utilities, lpSum, LpStatus
@@ -26,16 +24,16 @@ import datasense as ds
 header_title = 'Linear Programming---Plants and Warehouses'
 header_id = 'linear-programming-plants-and-warehouses'
 output_url = 'plants_warehouses.html'
-wrapper = textwrap.TextWrapper(width=70)
-original_stdout = sys.stdout
-sys.stdout = open(output_url, 'w')
-ds.html_header(
-    headertitle=header_title,
-    headerid=header_id
-)
 
 
 def main():
+    wrapper = textwrap.TextWrapper(width=70)
+    original_stdout = ds.html_begin(
+        outputurl=output_url,
+        headertitle=header_title,
+        headerid=header_id
+    )
+    print('<pre style="white-space: pre-wrap;">')
     # Define decision variables: plants, warehouses
     plants = ['Rockford', 'Grand Rapids']
     pretty_print(plants, 'Plants')
@@ -102,10 +100,11 @@ def main():
     print(
         f'\nTotal cost of transportation = {utilities.value(model.objective)}'
     )
-    ds.html_footer()
-    sys.stdout.close()
-    sys.stdout = original_stdout
-    webbrowser.open_new_tab(output_url)
+    print('</pre>')
+    ds.html_end(
+        originalstdout=original_stdout,
+        outputurl=output_url
+    )
 
 
 def pretty_print(

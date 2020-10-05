@@ -11,9 +11,7 @@ https://itnext.io/introduction-to-linear-programming-with-python-1068778600ae
 '''
 
 
-import webbrowser
 import textwrap
-import sys
 
 from pulp import (
     LpProblem, LpMaximize, LpVariable, LpInteger, LpStatus, utilities
@@ -25,12 +23,12 @@ header_title = 'Linear Programming---Medicines and Herbs'
 header_id = 'linear-programming-medicines-and-herbs'
 output_url = 'medicines_herbs.html'
 wrapper = textwrap.TextWrapper(width=70)
-original_stdout = sys.stdout
-sys.stdout = open(output_url, 'w')
-ds.html_header(
+original_stdout = ds.html_begin(
+    outputurl=output_url,
     headertitle=header_title,
     headerid=header_id
 )
+print('<pre style="white-space: pre-wrap;">')
 # Create the linear programming model object
 model = LpProblem(name='medicines_and_herbs', sense=LpMaximize)
 # Create the linear programming variable objects
@@ -73,7 +71,8 @@ for v in model.variables():
     print(v.name, '=', v.varValue)
 # Print the optimized objective function
 print('Objective value =', utilities.value(model.objective))
-ds.html_footer()
-sys.stdout.close()
-sys.stdout = original_stdout
-webbrowser.open_new_tab(output_url)
+print('</pre>')
+ds.html_end(
+    originalstdout=original_stdout,
+    outputurl=output_url
+)

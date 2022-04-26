@@ -9,7 +9,7 @@ time -f '%e' ./plants_warehouses.py
 ./plants_warehouses.py > plants_warehouses.txt
 '''
 
-from typing import Union, Dict, List, Tuple
+from typing import Dict, List, NoReturn, Tuple, Union
 import pprint
 
 from pulp import (
@@ -105,7 +105,7 @@ def main():
 def pretty_print(
     object: Union[str, Dict, List, Tuple],
     label: str
-) -> None:
+) -> NoReturn:
     '''
     Print data structures for clarity.
 

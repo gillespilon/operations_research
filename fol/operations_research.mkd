@@ -1,0 +1,401 @@
+% Udemy---solve operations research problems
+
+<a href=""><span style="color:#00247D;">e</span><span style="color:#CF142B;">n</span></a> | <a href=""><span style="color:#0055A4;">f</span></span><span style="color:#EF4125;">r</span></a>
+
+<span class="witty">Improving productivity one Python script at a time</span>
+
+# In brevi
+
+TBD
+
+# Contents
+
+- [Introduction](#introduction)
+- [What is optimization?](#what-is-optimization)
+- [Installing Python](#installing-python)
+- [Installing Python packages](#installing-python-packages)
+- [Sypder IDE](spyder-ide)
+- [Jupyter Notebook, JupyterLab](#jupyter-noteboo-jupyterlab)
+- [Quiz 1](#quiz-1)
+- [Lists, tuples, dictionaries](#lists-tupeles-dictionaries)
+- [if, for, while](#if-for-while)
+- [Functions](#functions)
+- [NumPy](#numpy)
+- [pandas](#pandas)
+- [pandas Excel, join](#pandas-excel-join)
+- [Matplotlib](#matplotlib)
+- [References](#references)
+- [Quiz 2](#quiz 2)
+- [Introduction to mathematical programming](#introduction-to-mathematical-programming)
+- [How do we solve optimization problems?](#how-do-we-solve-optimization-problems)
+- [Objective function and constraints](#objective-function-and-constraints)
+- [How do you model your problem?](#how-do-you-model-your-problem)
+- [Example 1](#example-1)
+- [Types of variables](#types-of-variables)
+- [Support](#support)
+
+# Introduction
+
+Outline
+
+- Installing Python and packages
+- Starting with Python
+- Linear programming
+- Mixed-integer linear programming
+- Nonlinear programming
+- Mixed-integer nonlinear programming
+- Heuristics (genetic algorithm and particle swarm)
+- Constraint programming
+- Practical examples
+
+# What is optimization?
+
+- It is search for the optimal solution to a mathematical problem
+
+## Example
+
+Maximize the revenue for the sale of two products, x and y. Each product costs $1. What is the required daily production?
+
+Constraints
+
+\begin{align}
+    2y     & \leq x + 8  & \text{production time} \\
+    2x + y & \leq 14     & \text{raw material} \\
+    2x     & \leq y + 10 & \text{historical sales} \\
+    x, y   & \leq 10     & \text{maximum daily production}
+\end{align}
+
+Convert to a set of equations and an objective function
+
+\begin{align}
+    \text{max}(x + y) \\
+    -x + 2y & \leq 8 \\
+    2x + y & \leq 14 \\
+    2x - y & \leq 10 \\
+    0 \leq x & \leq 10 \\
+    0 \leq y & \leq 10
+\end{align}
+
+Optimization steps
+
+- Understand problem
+- Model problem
+- Resolve problem
+- Present results
+
+# Installing Python
+
+- See my job aids
+
+# Installing Python packages
+
+- See my my job aids
+
+# Spyder IDE
+
+- I do not use this
+
+# Jupyter Notebook, JupyterLab
+
+- I do not use this
+
+# Quiz 1
+
+- The instructor recommends Spyder over JupyterLab for complex optimizations
+- How do you do you install a package? `pip install --user <package>`
+- Why should I use a package? Someone has written code that will make it easier for our work.
+
+# Lists, tuples, dictionaries
+
+- The instructor explained basic lists, tuples, and dictionaries
+- Lists are mutable
+- Tuples are immutable
+- Dictionaries are mutable
+
+# if, for, while
+
+- The instructor showed basic information
+
+# Functions
+
+- The instructor showed basic information
+
+# NumPy
+
+- The instructor showed basic information
+
+# pandas
+
+- The instructor showed basic information
+
+# pandas Excel, join
+
+- The instructor showed basic information
+
+# Matplotlib
+
+- The instructor showed basic information
+
+# Quiz 2
+
+- If you have an input similar to a table, should you use Numpy or Pandas? It is recommended to use pandas, but you could use NumPy.
+- How can you create the following code using a single line?
+
+    for i in range(6):
+        if i<3:
+            print('less than 3')
+        else:
+            print('greater or equal to 3')
+
+    [print("i < 3") if i < 3 else print("i > 3") for i in range(6)]
+
+- x = [1, 2, 3] is a list
+- Create a function that returns the maximum odd number of a list.
+
+    def max_odd(myList):
+        oddNumbers = [i if i%2 == 1 else 0 for i in myList]
+        return max(oddNumbers)
+
+# Introduction to mathematical programming
+
+- Mathematical modeling is the ability of converting a real-world problem into the mathematical world
+- It requires skill in operations research and the subject of the problem you are dealing with
+- In optimization you want to minimize or maximize something (in general)
+
+# How do we solve optimization problems?
+
+- Understand problem
+- Model problem
+- Resolve problem
+    - Framework
+    - Solver
+- Present results
+
+# Types of variables
+
+What is a variable? In the equations above, x and y are optimization variables. The value of each variable is unknown.
+
+- Continuous, can assume any value
+- Integer, discrete
+- Binary
+- Others
+
+What is a parameter? It is something we know the value of before the optimization.
+
+What is an index? It is the subscript for any variable.
+
+What is a set?
+
+Parameter, index, and sets are not types of variables.
+
+# Objective function and constraints
+
+The objective function defines what you are looking for.
+
+The constraints are the rules that must be respected by the solution.
+
+# How do you model your problem?
+
+## Our first formulation
+
+Suppose you wish to travel from USA to Spain and there are these options:
+
+- Route USA-Spain
+    - Option A: travelling time 8h, no stops, 2,000 USD
+    - Option B: travelling time 12h, 2 stops, 1,000 USD
+    - Option C: travelling time 16h, 3 stops, 900 USD
+- Route Spain-USA
+    - Option D: traveling time 9h, no stops, 1,500 USD
+    - Option E: traveling time 32h, 3 stops, 500 USD
+
+How could we find the best routes, one for USA-Spain and other for Spain-USA?
+
+First we have to define what we wish.
+
+1. Minimize the total cost?
+2. Minimize the total cost but within a traveling time limit?
+3. Minimize the traveling time?
+4. Minimize the traveling time but within a budget?
+
+Can you see? We must define our objective, there is no way to define the best route if you do not define what is "best". And this is our objective function!
+
+To define the objective function, we have to define our variables, parameters, and indexes.
+
+Remember:
+
+- Parameters are defined and know prior to the optimization decision (on our example, the costs and travelling time)
+- Variables are the outputs from the optimization problem
+- Indexes are used to represent variations of Parameters and Variables. For example tA and tB can be defined as the travelling time of option A and B, so A/B are indexes and t is a parameter (since we know the travelling time).
+
+For our problem, we can create two binary variables x and y, where x is the decision on selecting (or not) an option in the route USA-Spain and y is the decision on selecting (or not) an option in the route Spain-USA. Also, we define the indexes as A, B, C, D, and E, which are the options for the routes (defined above). Thus, we have these variables:
+
+- $x_A$ is the decision on selecting or not the route option A.
+
+\begin{align}
+   xA & = 1 \text{ if A is selected} \\
+   xA & = 0 \text{ if A is not selected}
+\end{align}
+
+- xB and xC are the decision on selecting or not the routes B and C
+- yD and yE are the decision on selection or not the routes D and E
+
+Note: we have different variables for routes USA-Spain (variable x) and Spain-USA (variable y) because they are different decisions, one does not compete with the other.
+
+### Defining generic indexes:
+
+We can define i and j as generic indexes, where i represents A, B or C; and j represents D or E. In this case we have
+
+- $x_i$ and $y_j$ as variables, where
+- $x_i$ represents $x_A$, $x_B$, $x_C$
+- $y_j$ represents $y_D$, $y_E$
+
+Also, we can define our parameters
+
+- $c_i$ is the cost of option i (for example, $c_A$ is the cost of option A, 2,000 USD)
+- $t_i$ is the travelling time of option i (for example, $t_A$ is the travelling time of option A, 8h)
+
+### Minimize total cost
+
+Supposing we wish to define the cheapest routes for your travel. We have our objective function as
+
+\begin{align}
+    \text{max}(x_A \times c_A + x_B \times c_B + x_C \times c_C + y_D \times c_D + y_E \times c_E)
+\end{align}
+
+which is the decision on selecting an option times the cost of that option.
+
+As an example, suppose we select options A and E, we would have
+
+\begin{align}
+    1 \times c_A + 0 \times c_B + 0 \times c_C + 0 \times c_D + 1 \times c_E = c_A + c_E
+\end{align}
+
+And this is the cost of options A and E.
+
+If we wish to write it in a compact form, we would have
+
+\begin{align}
+    \text{min}\Bigl(\sum(x_i \times c_i) + \sum(y_j \times c_j)\Bigl)
+\end{align}
+
+Now, remember, this is the objective function! We also need to define constraints on our problem, which are rules.
+
+For this problem we would have
+
+\begin{align}
+    \text{min}\Bigl(\sum(x_i \times c_i) + \sum(y_j \times c_j\Bigl) \\
+    \sum x_i = 1 \\
+    \sum y_j = 1
+\end{align}
+
+The first constraint defines that only one option in the route USA-Spain can be selected.
+
+\begin{align}
+    x_A + x_B + x_C & = 1 \\
+    \sum x_i & = 1
+\end{align}
+
+The second constraint define that only 1 option in the route Spain-USA must be selected
+
+\begin{align}
+    y_D + y_E & = 1 \\
+    \sum y_j & = 1
+\end{align}
+
+### Minimize total cost with time constraint
+
+Now, let's suppose we still want to minimize the total cost, but we wish to define a maximium travelling time. So we would have:
+
+\begin{align}
+    \text{min}\Bigl(\sum(x_i \times c_i) + \sum(y_j \times c_j\Bigl)
+\end{align}
+
+\begin{align}
+    \sum x_i & = 1 \\
+    \sum y_j & = 1 \\
+    \sum(x_i \times t_i) + sum(y_j \times t_j) & \leq \text{MAX_TIME} \\
+\end{align}
+\begin{align*}
+    \text{MAX_TIME is the limit for the total traveling time}
+\end{align*}
+
+Note that a simple problem can become complex in selecting the best solution.
+
+### Minimize travelling time
+
+We can also create an objective function to minimize the travelling time. In this case, we would have
+
+\begin{align}
+    \text{min}\Bigl(\sum(x_i \times t_i) + \sum(y_j \times t_j)\Bigl)
+    \sum x_i & = 1 \\
+    \sum y_j & = 1
+\end{align}
+
+Now, the objective function minimize the decision on selecting the routes times the tavelling time of the route.
+
+### Minimize travelling time with a budget
+
+If we want, you can define a budget for your travel, so we would have
+
+\begin{align}
+    \text{min}\Bigl(\sum(x_i \times t_i) + \sum(y_j \times t_j)\Bigl) \\
+    \sum x_i & = 1 \\
+    \sum y_j & = 1 \\
+    \sum(x_i \times c_i) + \sum(y_j \times c_j) & \leq \text{BUDGET}
+\end{align}
+
+Now, there is a constraint defining the the selection of the routes must be less or equal to the BUDGET. Note that the formulation above can also be expressed in the following format, which is more common in articles or books. If you are not familiar with compact formats using summations, the formulation bellow is the same as above but not using a compact format.
+
+## Conclusion
+
+You can create your own formulation, using different variables and equations. This is very particular and to practice the skill, I recommend you read articles or books in specific subjects that you have some knowledge; thus, you can see how others have formulate the problem. Moreover, this is only to formulate the problem, in the next sections of this course, we will learn how to solve the problem and find the best solution!.
+
+# Example 1
+
+I want to define the best investments that I can make. I have UDS 100 000 and these options:
+
+A. Low-risk fund with historical gains of 5 % per year
+B. Medium-risk fund with historical gains of 10 % per year
+C. Hgih-risk fund with historical gains of 12 % per year
+
+I want to control the risk of my investments with 10 % invested at high risk and 20 % invested at medium risk. What are my investment decisions in A, B, and C to maximize my return?
+
+Variables and indices:
+
+- R~A~, R~B~, R~C~ are the return on investment of A, B, C
+- C~A~, C~B~, C~C~ are are invested capital in funds A, B, C
+
+Constaints (rules):
+
+\begin{align}
+    C_A + C_B + C_C & = 100000 \\
+    R_A & = 0.05 \times C_A \\
+    R_B & = 0.10 \times C_B \\
+    R_C & = 0.12 \times C_C \\
+    0 \leq C_B & \leq 0.2 \times 100000 \\
+    0 \leq C_C & \leq 0.01 \times 100000
+\end{align}
+
+Objective function:
+
+\begin{align}
+    \text{max}(R_A + R_B + R_C)
+\end{align}
+
+The Python script for this example is `operations_research_example_01.py`.
+
+# Commands
+
+TBD
+
+# Examples
+
+TBD
+
+# References
+
+TBD
+
+# Support
+
+gillespilon13@gmail.com

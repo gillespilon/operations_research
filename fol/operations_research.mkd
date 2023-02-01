@@ -25,12 +25,13 @@ TBD
 - [pandas Excel, join](#pandas-excel-join)
 - [Matplotlib](#matplotlib)
 - [References](#references)
-- [Quiz 2](#quiz 2)
+- [Quiz 2](#quiz-2)
 - [Introduction to mathematical programming](#introduction-to-mathematical-programming)
 - [How do we solve optimization problems?](#how-do-we-solve-optimization-problems)
 - [Objective function and constraints](#objective-function-and-constraints)
 - [How do you model your problem?](#how-do-you-model-your-problem)
 - [Example 1](#example-1)
+- [Example 2](#example-2)
 - [Types of variables](#types-of-variables)
 - [Support](#support)
 
@@ -354,16 +355,20 @@ You can create your own formulation, using different variables and equations. Th
 
 I want to define the best investments that I can make. I have UDS 100 000 and these options:
 
-A. Low-risk fund with historical gains of 5 % per year
-B. Medium-risk fund with historical gains of 10 % per year
-C. Hgih-risk fund with historical gains of 12 % per year
+- A. Low-risk fund with historical gains of 5 % per year
+- B. Medium-risk fund with historical gains of 10 % per year
+- C. Hgih-risk fund with historical gains of 12 % per year
 
-I want to control the risk of my investments with 10 % invested at high risk and 20 % invested at medium risk. What are my investment decisions in A, B, and C to maximize my return?
+I want to control the risk of my investments with 10 % in fund C and 20 % in fund B. What are my investment decisions in A, B, and C to maximize my return?
 
-Variables and indices:
+Indices
 
-- R~A~, R~B~, R~C~ are the return on investment of A, B, C
-- C~A~, C~B~, C~C~ are are invested capital in funds A, B, C
+- A, B, C
+
+Variables:
+
+- R~A~, R~B~, R~C~ are the return on investments
+- C~A~, C~B~, C~C~ are the invested capital
 
 Constaints (rules):
 
@@ -373,7 +378,7 @@ Constaints (rules):
     R_B & = 0.10 \times C_B \\
     R_C & = 0.12 \times C_C \\
     0 \leq C_B & \leq 0.2 \times 100000 \\
-    0 \leq C_C & \leq 0.01 \times 100000
+    0 \leq C_C & \leq 0.1 \times 100000
 \end{align}
 
 Objective function:
@@ -383,6 +388,57 @@ Objective function:
 \end{align}
 
 The Python script for this example is `operations_research_example_01.py`.
+
+# Example 2
+
+I want to define the best investments that I can make. I have UDS 100 000 and these options:
+
+- A. Low-risk fund with historical gains of 5 % per year
+- B. Medium-risk fund with historical gains of 10 % per year
+- C. Hgih-risk fund with historical gains of 12 % per year
+- D. Special fund: $10^{-6} \times C_D^2$
+
+I want to control the risk of my investments with 10 % in fund C, 20 % in fund B, and 30 % in fund D. What are my investment decisions in A, B, C, and D to maximize my return?
+
+Indices
+
+- A, B, C, D
+
+Variables:
+
+- R~A~, R~B~, R~C~, R~D~ are the return on investments,
+- C~A~, C~B~, C~C~, C~D~  are the invested capital
+
+Constaints (rules):
+
+\begin{align}
+    C_A + C_B + C_C + C_D& = 100000 \\
+    R_A & = 0.05 \times C_A \\
+    R_B & = 0.10 \times C_B \\
+    R_C & = 0.12 \times C_C \\
+    R_D & = 10^{-6} \times C_D^2 \\
+    0 \leq C_B & \leq 0.2 \times 100000 \\
+    0 \leq C_C & \leq 0.1 \times 100000 \\
+    0 \leq C_D & \leq 0.3 \times 100000 \\
+\end{align}
+
+Objective function:
+
+\begin{align}
+    \text{max}(R_A + R_B + R_C + R_D) \\
+\end{align}
+
+A concise version of the above equations is:
+
+\begin{align}
+    F & = \{A, B, C, D\} \\
+    \sum\limits_{f \in F} C_f & = 100000 \\
+    R_f & = \text{return}(C_f)\;\forall\;f \text{, where return() is a function} \\
+    C_f^\text{min} \leq C_f & \leq C_f^\text{max}\;\forall\;f \\
+    \text{max}\sum\limits_{f \in F} R_f
+\end{align}
+
+The Python script for this example is `operations_research_example_02.py`.
 
 # Commands
 

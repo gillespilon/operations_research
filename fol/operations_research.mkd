@@ -32,6 +32,7 @@ TBD
 - [How do you model your problem?](#how-do-you-model-your-problem)
 - [Example 1](#example-1)
 - [Example 2](#example-2)
+- [Example 3](#example-3)
 - [Types of variables](#types-of-variables)
 - [Support](#support)
 
@@ -439,6 +440,31 @@ A concise version of the above equations is:
 \end{align}
 
 The Python script for this example is `operations_research_example_02.py`.
+
+# Example 3
+
+A company makes shoes with three machines. In the next month there is a demand of 10000 shoes. What number of products should be assigned to each machine in order to minimize the total cost?
+
+Indices:
+
+- A, B, C (machines)
+
+Variables:
+
+- C~A~, C~B~, C~C~ are the costs of production for each machine
+- P~A~, P~B~, P~C~ are the number of shoes produced by each machine (positive integer)
+
+\begin{align}
+    F & = \{A, B, C\} \\
+    \sum\limits_{f \in F} P_f & = 10000 \\
+    C_A & = 0.1 \times P_A^2 + 0.5 \times P_A + \beta_A \times 0.1 \text{, where $\beta_A$ is a binary variable} \\
+    C_B & = 0.3 \times P_B + \beta_B \times 0.5 \text{, where $\beta_B$ is a binary variable} \\
+    C_C & = 0.01 \times P_C^3 \\
+    P_A & \leq \beta_A \times M \text{, where M is the capacity of the machine} \\
+    P_B & \leq \beta_B \times M \text{, where M is the capacity of the machine} \\
+    P_A, P_B, P_C & \geq 0 \\
+    \text{min}\sum\limits_{f \in F} C_f
+\end{align}
 
 # Commands
 

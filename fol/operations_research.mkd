@@ -33,6 +33,7 @@ TBD
 - [Example 1](#example-1)
 - [Example 2](#example-2)
 - [Example 3](#example-3)
+- [Example 4](#example-4)
 - [Types of variables](#types-of-variables)
 - [Support](#support)
 
@@ -465,6 +466,50 @@ Variables:
     P_A, P_B, P_C & \geq 0 \\
     \text{min}\sum\limits_{f \in F} C_f
 \end{align}
+
+# Example 4
+
+Create a generic formulation to minimize the path from point A to point B. The numbers are the length of the arcs (distance) that connect one node to another.
+
+![routing](../fot/operations_research_example_04_routing.png)
+
+Variables:
+
+- x<sub>i, j</sub> binary decision on connection point i to j, where i is the beginning of the arc, and j is the end of the arc
+
+We are selecting the paths, not the nodes. There are seven x variables, that is, seven arcs.
+
+Parameters:
+
+- D<sub>i, j</sub> distance from point i to j
+
+Sets:
+
+- $\Omega_i^\text{in}$ set of nodes that connect arcs entering node i
+- $\Omega_i^\text{out}$ set of nodes that connect arcs exiting node i
+
+Examples:
+
+- $\Omega_{P1}^\text{in} = \{A, P2\}$
+- $\Omega_{P1}^\text{out} = \{P2, B\}$
+- $\Omega_{B}^\text{in} = \{P1, P3\}$
+- $\Omega_{A}^\text{out} = \{P1, P2\}$
+
+Objective function:
+
+\begin{align}
+    \text{min}\sum_{i,j}x_{i,j} D_{i,j}
+\end{align}
+
+Constraints
+
+\begin{align}
+    \sum_{j\;\in\;\Omega_A^{out}}x_{A,j} & = 1 \\
+    \sum_{i\;\in\;\Omega_B^{in}}x_{i,B} & = 1 \\
+    \sum_{j\;\in\;\Omega_i^{out}}x_{i,j} & = \sum_{j\;\in\;\Omega_i^{in}}x_{j,i}\;\forall i\backslash\{A,B\}
+\end{align}
+
+The first constraint means that the sum of all of the arcs exiting node A must equal 1 and because x is binary this means I must select one of the arcs. The second constraint means that the sum of all of the arcs entering node B must equal 1 and because x is binary this means I must select one of the arcs. The sum of the arcs going into a node must equal the number of arcs going out of a node, excluding nodes A and B.
 
 # Commands
 

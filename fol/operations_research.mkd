@@ -34,6 +34,7 @@ TBD
 - [Example 2](#example-2)
 - [Example 3](#example-3)
 - [Example 4](#example-4)
+- [Example 5](#example-5)
 - [Types of variables](#types-of-variables)
 - [Support](#support)
 
@@ -510,6 +511,40 @@ Constraints
 \end{align}
 
 The first constraint means that the sum of all of the arcs exiting node A must equal 1 and because x is binary this means I must select one of the arcs. The second constraint means that the sum of all of the arcs entering node B must equal 1 and because x is binary this means I must select one of the arcs. The sum of the arcs going into a node must equal the number of arcs going out of a node, excluding nodes A and B.
+
+# Example 5
+
+A construction company needs to assign five of the company's teams:
+
+- A. Revenue of $500, requires 1 team
+- B. Revenue of $4000, requires 3 teams
+- C. Revenue of $3000, requires 2 teams
+- D. Revenue of $2000, requires 1 team
+- E. Revenue of $2000, requires 5 teams
+
+Select the assignments that would maximize revenue. Each assignment is made only once. Not all assignments will be made.
+
+Variables:
+
+- x<sub>o,</sub>, binary decision on selecting construction o, x<sub>A,</sub>, x<sub>B,</sub>, x<sub>C,</sub>, x<sub>D,</sub>, x<sub>E,</sub>
+
+Parameters:
+
+- R<sub>o</sub>, revenue of construction o, R<sub>A,</sub>, R<sub>B,</sub>, R<sub>C,</sub>, R<sub>D,</sub>, R<sub>E,</sub>
+- NT<sub>o</sub>, number of teams required for construction o
+- NT<sub>max</sub>, maximum number of available teams, 5
+
+Objective function:
+
+\begin{align}
+    \text{max}\sum_o\;x_o \times R_o
+\end{align}
+
+Constraints:
+
+\begin{align}
+    \sum_o\;x_o \times \text{NT}_o \leq \text{NT}_\text{maz}
+\end{align}
 
 # Commands
 

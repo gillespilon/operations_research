@@ -663,6 +663,87 @@ Constraints:
     \sum_j x_{j,d} \times D_j & \leq \text{Th}\;\forall\;d \\
     \sum_d x_{j,d} & \leq 1\;\forall\;j
 \end{align}
+
+# Example 8
+
+Define the schedule of customer visits for the next three days. Maximize the profit. A working day is 6 h. Ignore travel time. Each visit is only once. Do a maximum of one job per day.
+
+- A. Duration 2 h, profit USD 200
+- B. Duration 3 h, profit USD 500
+- C. Duration 5 h, profit USD 300
+- D. Duration 2 h, profit USD 100
+- E. Duration 6 h, profit USD 1000
+- F. Duration 4 h, profit USD 300
+
+Variables:
+
+- x<sub>j, d</sub> -> binary decision on attending job j on day d
+
+<table class="table-bordered">
+<tr>
+<td class="text-center"></td>
+<td class="text-center">D1</td>
+<td class="text-center">D2</td>
+<td class="text-center">D3</td>
+</tr>
+<tr>
+<td class="text-center">A</td>
+<td class="text-center">X(A, 1)</td>
+<td class="text-center">X(A, 2)</td>
+<td class="text-center">X(A, 3)</td>
+</tr>
+<tr>
+<td class="text-center">B</td>
+<td class="text-center">X(B, 1)</td>
+<td class="text-center">X(B, 2)</td>
+<td class="text-center">X(B, 3)</td>
+</tr>
+<tr>
+<td class="text-center">C</td>
+<td class="text-center">X(C, 1)</td>
+<td class="text-center">X(C, 2)</td>
+<td class="text-center">X(C, 3)</td>
+</tr>
+<tr>
+<td class="text-center">D</td>
+<td class="text-center">X(D, 1)</td>
+<td class="text-center">X(D, 2)</td>
+<td class="text-center">X(D, 3)</td>
+</tr>
+<tr>
+<td class="text-center">E</td>
+<td class="text-center">X(E, 1)</td>
+<td class="text-center">X(E, 2)</td>
+<td class="text-center">X(E, 3)</td>
+</tr>
+<tr>
+<td class="text-center">F</td>
+<td class="text-center">X(F, 1)</td>
+<td class="text-center">X(F, 2)</td>
+<td class="text-center">X(F, 3)</td>
+</tr>
+</table>
+
+Parameters:
+
+- P<sub>j</sub> -> profit for the visit
+- D<sub>j</sub> -> job duration in hours
+- Th -> number hours in a work day
+
+Objective function:
+
+\begin{align}
+    \text{max}\sum_j \sum_d x_{j,d} \times P_j
+\end{align}
+
+Constraints:
+
+\begin{align}
+    \sum_j x_{j,d} \times D_j & \leq \text{Th}\;\forall\;d \\
+    \sum_d x_{j,d} & \leq 1\;\forall\;j \\
+    \sum_j x_{j,d} & \leq 1\;\forall\;d
+\end{align}
+
 # Commands
 
 TBD

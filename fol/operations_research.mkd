@@ -86,8 +86,11 @@ Optimization steps
 
 - Understand problem
 - Model problem
-- Resolve problem
+- Programming language (framework, a mathematical modeling language)
+- Solve problem (solver)
 - Present results
+
+The Python script for this example is `operations_research_example_09.py`.
 
 # Installing Python
 
@@ -470,6 +473,8 @@ Variables:
     \text{min}\sum\limits_{f \in F} C_f
 \end{align}
 
+The Python script for this example is `operations_research_example_03.py`.
+
 # Example 4
 
 Create a generic formulation to minimize the path from point A to point B. The numbers are the length of the arcs (distance) that connect one node to another.
@@ -514,6 +519,8 @@ Constraints
 
 The first constraint means that the sum of all of the arcs exiting node A must equal 1 and because x is binary this means I must select one of the arcs. The second constraint means that the sum of all of the arcs entering node B must equal 1 and because x is binary this means I must select one of the arcs. The sum of the arcs going into a node must equal the number of arcs going out of a node, excluding nodes A and B.
 
+The Python script for this example is `operations_research_example_04.py`.
+
 # Example 5
 
 A construction company needs to assign five of the company's teams:
@@ -547,6 +554,8 @@ Constraints:
 \begin{align}
     \sum_o\;x_o \times \text{NT}_o \leq \text{NT}_\text{maz}
 \end{align}
+
+The Python script for this example is `operations_research_example_05.py`.
 
 # Example 6
 
@@ -584,6 +593,8 @@ Constraints:
     x_D & \leq x_A \\
     x_D & \leq x_C \\
 \end{align}
+
+The Python script for this example is `operations_research_example_06.py`.
 
 # Example 7
 
@@ -664,6 +675,8 @@ Constraints:
     \sum_d x_{j,d} & \leq 1\;\forall\;j
 \end{align}
 
+The Python script for this example is `operations_research_example_07.py`.
+
 # Example 8
 
 Define the schedule of customer visits for the next three days. Maximize the profit. A working day is 6 h. Ignore travel time. Each visit is only once. Do a maximum of one job per day.
@@ -743,6 +756,10 @@ Constraints:
     \sum_d x_{j,d} & \leq 1\;\forall\;j \\
     \sum_j x_{j,d} & \leq 1\;\forall\;d
 \end{align}
+
+The Python script for this example is `operations_research_example_08.py`.
+
+# Linear Programning Solver vs Framework
 
 # Commands
 

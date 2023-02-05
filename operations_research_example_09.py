@@ -10,19 +10,19 @@ from ortools.linear_solver import pywraplp
 
 def main():
     # declare the solver
-    # create the linear solver with the GLOP backend
+    # create the linear solver with the GLOP back-end
     # pywraplp is a Python wrapper for the underlying C++ solver
-    # the arguement "GLOP" GLOP, the OR-Tools linear solver
-    solver = pywraplp.Solver.CreateSolver("GLOP")
+    # the argument "GLOP" GLOP, the OR-Tools linear solver
+    solver = pywraplp.Solver.CreateSolver(solver_id="GLOP")
     # create the variables
-    x = solver.NumVar(0, 10, "x")
-    y = solver.NumVar(0, 10, "y")
+    x = solver.NumVar(lb=0, ub=10, name="x")
+    y = solver.NumVar(lb=0, ub=10, name="y")
     # create the constraints
-    solver.Add(-x + 2 * y <= 8)
-    solver.Add(2 * x + y <= 14)
-    solver.Add(2 * x - y <= 10)
+    solver.Add(constraint=-x + 2 * y <= 8)
+    solver.Add(constraint=2 * x + y <= 14)
+    solver.Add(constraint=2 * x - y <= 10)
     # create the objective function
-    solver.Maximize(x + y)
+    solver.Maximize(expr=x + y)
     # invoke the solver
     results = solver.Solve()
     # display the results

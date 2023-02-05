@@ -9,14 +9,23 @@ from ortools.linear_solver import pywraplp
 
 
 def main():
+    # declare the solver
+    # create the linear solver with the GLOP backend
+    # pywraplp is a Python wrapper for the underlying C++ solver
+    # the arguement "GLOP" GLOP, the OR-Tools linear solver
     solver = pywraplp.Solver.CreateSolver("GLOP")
+    # create the variables
     x = solver.NumVar(0, 10, "x")
     y = solver.NumVar(0, 10, "y")
+    # create the constraints
     solver.Add(-x + 2 * y <= 8)
     solver.Add(2 * x + y <= 14)
     solver.Add(2 * x - y <= 10)
+    # create the objective function
     solver.Maximize(x + y)
+    # invoke the solver
     results = solver.Solve()
+    # display the results
     if results == pywraplp.Solver.OPTIMAL:
         print("Optimal solution found")
         print(f"x:{x.solution_value():6,.1f}")
